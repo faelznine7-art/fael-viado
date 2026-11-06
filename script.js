@@ -1,10 +1,22 @@
+function salvarResposta(tipo, resposta) {
+    fetch("/api/respostas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tipo, resposta }),
+        keepalive: true,
+    }).catch(() => {});
+}
+
 function mostrarMensagem() {
+    salvarResposta("mensagem", "Clicou no botão da mensagem");
     document.getElementById("mensagem").innerHTML =
         "Você é uma das melhores coisas que já aconteceram na minha vida! ❤️";
 }
 
 function responder(correto) {
     const resultado = document.getElementById("resultado");
+    salvarResposta("quiz", correto ? "05/09/2026 (acertou)" : "12/10/2026 (errou)");
+
 
     if (correto) {
         resultado.innerHTML = "Acertou! Essa data é muito especial! ❤️";
@@ -60,10 +72,12 @@ let passeioEscolhido = "";
 
 function escolherDia(dia) {
     diaEscolhido = dia;
+    salvarResposta("dia", dia);
 }
 
 function escolherPasseio(passeio) {
     passeioEscolhido = passeio;
+    salvarResposta("passeio", passeio);
 }
 
 function confirmarEncontro() {
@@ -72,6 +86,8 @@ function confirmarEncontro() {
             "Escolha o dia e o passeio, meu amor! ❤️";
         return;
     }
+
+    salvarResposta("encontro", diaEscolhido + " - " + passeioEscolhido);
 
     document.getElementById("confirmacao").innerHTML =
         "Nosso encontro será domingo? Não! Será " +
