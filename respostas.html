@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Respostas da Clarinha</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        form { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; }
+        input {
+            padding: 12px 18px; border-radius: 30px; border: 2px solid #e9a8b7;
+            font-family: inherit; font-size: 14px; color: #593b45; min-width: 220px;
+        }
+        input:focus { outline: 2px solid #bd647d; outline-offset: 2px; }
+        form button { margin: 0; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 12px 10px; border-bottom: 1px solid #f4d3dc; font-size: 14px; }
+        th { color: #bd647d; font-weight: 600; }
+        .tag {
+            display: inline-block; padding: 3px 12px; border-radius: 20px;
+            background: #fce4ec; color: #bd647d; font-size: 12px; font-weight: 500;
+        }
+        #status { margin-top: 15px; color: #bd647d; }
+        .tabela-wrap { overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Respostas</h1>
+        <p>O que a Clarinha escolheu</p>
+    </header>
+
+    <main>
+        <section>
+            <form id="login">
+                <label for="senha" class="sr-only" style="position:absolute;left:-9999px">Senha</label>
+                <input id="senha" type="password" placeholder="Senha" autocomplete="current-password" required>
+                <button type="submit">Ver respostas</button>
+            </form>
+            <p id="status" role="status"></p>
+        </section>
+
+        <section id="lista" hidden>
+            <div class="tabela-wrap">
+                <table>
+                    <thead>
+                        <tr><th scope="col">Quando</th><th scope="col">Tipo</th><th scope="col">Resposta</th></tr>
+                    </thead>
+                    <tbody id="linhas"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const NOMES = { mensagem: "Mensagem", quiz: "Quiz", dia: "Dia", passeio: "Passeio", encontro: "Encontro" };
+        const form = document.getElementById("login");
+        const status = document.getElementById("status");
+
+        async function carregar(senha) {
+            status.textContent = "Carregando...";
+            const resp = await fetch("/api/respostas", { headers: { "x-admin-password": senha } });
+            if (resp.status === 401) {
+                status.textContent = "Senha incorreta.";
+                sessionStorage.removeItem("senha");
+                return;
+            }
+            if (!resp.ok) {
+                status.textContent = "Erro ao carregar as respostas.";
+                return;
+            }
+            sessionStorage.setItem("senha", senha);
+            const { respostas } = await resp.json();
+            const tbody = document.getElementById("linhas");
+            tbody.replaceChildren(...respostas.map((r) => {
+                const tr = document.createElement("tr");
+                const quando = document.createElement("td");
+                quando.textContent = new Date(r.criado_em).toLocaleString("pt-BR");
+                const tipo = document.createElement("td");
+                const tag = document.createElement("span");
+                tag.className = "tag";
+                tag.textContent = NOMES[r.tipo] || r.tipo;
+                tipo.appendChild(tag);
+                const resposta = document.createElement("td");
+                resposta.textContent = r.resposta;
+                tr.append(quando, tipo, resposta);
+                return tr;
+            }));
+            status.textContent = respostas.length
+                ? `${respostas.length} resposta(s).`
+                : "Ela ainda não respondeu nada.";
+            document.getElementById("lista").hidden = respostas.length === 0;
+        }
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            carregar(document.getElementById("senha").value);
+        });
+
+        const salva = sessionStorage.getItem("senha");
+        if (salva) carregar(salva);
+    </script>
+</body>
+</html>

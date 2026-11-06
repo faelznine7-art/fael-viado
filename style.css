@@ -220,3 +220,17 @@ section {
     }
 }
 }
+
+/* ESCOLHAS DO ENCONTRO */
+.encontro button.selecionado {
+    background: #d6336c;
+    color: white;
+    box-shadow: 0 0 0 3px white, 0 0 0 5px #d6336c;
+    transform: scale(1.05);
+}
+
+.encontro button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
