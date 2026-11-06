@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fff0f3, #fce4ec, #fff8f0);
+    color: #593b45;
+    text-align: center;
+}
+
+header {
+    padding: 65px 20px;
+    background: #e9a8b7;
+    color: white;
+}
+
+header h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 65px;
+}
+
+header p {
+    margin-top: 10px;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 25px;
+}
+
+section {
+    background: rgba(255,255,255,0.85);
+    padding: 35px 20px;
+    margin: 25px 0;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px rgba(120, 50, 70, 0.08);
+}
+
+h2 {
+    color: #bd647d;
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 1.8;
+}
+
+button {
+    background: #d9829b;
+    color: white;
+    border: none;
+    padding: 13px 23px;
+    margin: 15px 5px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #bd647d;
+    transform: translateY(-3px);
+}
+
+#mensagem, #resultado {
+    margin-top: 15px;
+    color: #bd647d;
+    font-weight: 500;
+}
+
+#tempo {
+    font-size: 25px;
+    font-weight: 600;
+    color: #bd647d;
+    margin: 20px 0;
+}
+
+.fotos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.fotos img {
+    width: 220px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #0002;
+}
+
+.carta p {
+    max-width: 600px;
+    margin: auto;
+}
+
+audio {
+    width: 100%;
+    max-width: 350px;
+}
+
+footer {
+    padding: 30px;
+    background: #e9a8b7;
+    color: white;
+}
+
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.heart {
+    position: absolute;
+    color: #e9a8b7;
+    animation: subir 6s linear infinite;
+}
+
+@keyframes subir {
+    from {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(-10vh);
+        opacity: 0.8;
+    }
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 48px;
+    }
+
+    .fotos img {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    #tempo {
+        font-size: 19px;
+    }/* CORAÇÕES PULSANDO */
+.heart {
+    animation: subir 6s linear infinite,
+               pulsar 1s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes pulsar {
+    0%, 100% {
+        scale: 1;
+        opacity: 0.6;
+    }
+
+    50% {
+        scale: 1.5;
+        opacity: 1;
+    }
+}
+
+/* BOTÕES COM EFEITO */
+button {
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 5px 20px #e9a8b7;
+}
+
+/* FOTOS COM ANIMAÇÃO */
+.fotos img {
+    transition: transform 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+.fotos img:hover {
+    transform: scale(1.06) rotate(2deg);
+    box-shadow: 0 10px 25px #e9a8b7;
+}
+
+/* TÍTULO COM BRILHO */
+header h1 {
+    animation: brilho 2s ease-in-out infinite alternate;
+}
+
+@keyframes brilho {
+    from {
+        text-shadow: 0 0 5px white;
+    }
+
+    to {
+        text-shadow: 0 0 20px white,
+                     0 0 30px #ffb6c9;
+    }
+}
+
+/* CARTA APARECENDO SUAVEMENTE */
+section {
+    animation: aparecer 1s ease;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+}

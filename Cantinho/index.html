@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Clarinha ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="hearts" id="hearts"></div>
+
+    <header>
+        <h1>Meu Amor! ❤️</h1>
+        <p>Feito com carinho.</p>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <h2>Minha pessoa favorita</h2>
+            <p>
+                Eu tive tanta sorte
+                de encontrar você!
+            </p>
+
+            <button onclick="mostrarMensagem()">
+                Clique aqui ❤️
+            </button>
+
+            <p id="mensagem"></p>
+        </section>
+
+        <section class="contador">
+            <h2>Nosso tempo juntos</h2>
+            <div id="tempo"></div>
+            <p>Cada segundo ao seu lado é especial.</p>
+        </section>
+
+        <section class="galeria">
+            <h2>Nossas lembranças 📸</h2>
+
+            <div class="fotos">
+              <img src="assets/WhatsApp Image 2026-11-06 at 10.22.32 (1).jpeg" >
+              <img src="assets/WhatsApp Image 2026-11-06 at 10.22.32.jpeg" alt="Nossa foto 2">
+              <img src="assets/WhatsApp Image 2026-11-06 at 10.22.32 (2).jpeg" alt="Nossa foto 3">
+            </div>
+        </section>
+
+        <section class="carta">
+            <h2>Uma cartinha para você 💌</h2>
+
+            <p>
+                Meu Amor você se tornou a pessoa mais importante
+                para a minha vida, Eu te amo para todo sempre!
+                Que você continue sendo essa pessoa meu amor.
+                Eu te amo! ❤️
+            </p>
+        </section>
+
+        <section class="quiz">
+            <h2>Vamos testar sua memória? 💗</h2>
+
+            <p>Qual é a nossa data especial?</p>
+
+            <button onclick="responder(true)">05/09/2026</button>
+            <button onclick="responder(false)">12/10/2026</button>
+
+            <p id="resultado"></p>
+        </section>
+        <section class="encontro">
+            <h2>Nosso próximo encontro? 💗</h2>
+            <p>Escolha um dia para ficarmos juntinhos!</p>
+        
+            <div class="dias">
+                <button onclick="escolherDia('Sábado')">Sábado ❤️</button>
+                <button onclick="escolherDia('Domingo')">Domingo ❤️</button>
+            </div>
+        
+            <p>Onde vamos passar nosso momento?</p>
+        
+            <div class="opcoes">
+                <button onclick="escolherPasseio('Shopping 🛍️')">
+                    🛍️ Shopping
+                </button>
+        
+                <button onclick="escolherPasseio('Cafeteria ☕')">
+                    ☕ Cafeteria
+                </button>
+        
+                <button onclick="escolherPasseio('Filme com açaí 🎬')">
+                    🎬 Filme com açaí
+                </button>
+        
+                <button onclick="escolherPasseio('Piquenique 🧺')">
+                    🧺 Piquenique
+                </button>
+            </div>
+        
+            <button onclick="confirmarEncontro()">
+                Confirmar nosso encontro ❤️
+            </button>
+        
+            <p id="confirmacao"></p>
+        </section>
+        <section class="musica">
+            <h2>Uma música para nós 🎵</h2>
+
+            <audio id="musica" controls loop>
+                <source src="vidssave.com Delacruz  - Sunshine 144P.mp4" type="audio/mpeg">
+            </audio>
+        </section>
+
+    </main>
+
+    <footer>
+        Feito com carinho para Clarinha ❤️
+    </footer>
+
+    <script src="script.js"></script>
+
+    
+</body>
+</html>
