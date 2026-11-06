@@ -69,30 +69,60 @@ function criarCoracao() {
 }
 let diaEscolhido = "";
 let passeioEscolhido = "";
+let encontroConfirmado = false;
+
+function marcarSelecionado(seletor, valor) {
+    document.querySelectorAll(seletor).forEach((botao) => {
+        const selecionado = botao.getAttribute("onclick").includes("'" + valor + "'");
+        botao.classList.toggle("selecionado", selecionado);
+        botao.setAttribute("aria-pressed", selecionado ? "true" : "false");
+    });
+}
 
 function escolherDia(dia) {
     diaEscolhido = dia;
-    salvarResposta("dia", dia);
+    marcarSelecionado(".encontro .dias button", dia);
+    document.getElementById("confirmacao").innerHTML = "";
 }
 
 function escolherPasseio(passeio) {
     passeioEscolhido = passeio;
-    salvarResposta("passeio", passeio);
+    marcarSelecionado(".encontro .opcoes button", passeio);
+    document.getElementById("confirmacao").innerHTML = "";
 }
 
-function confirmarEncontro() {
+async function confirmarEncontro() {
+    const confirmacao = document.getElementById("confirmacao");
+    const botao = document.querySelector(".encontro > button");
+
     if (diaEscolhido === "" || passeioEscolhido === "") {
-        document.getElementById("confirmacao").innerHTML =
-            "Escolha o dia e o passeio, meu amor! ❤️";
+        confirmacao.innerHTML = "Escolha o dia e o passeio, meu amor! ❤️";
         return;
     }
 
-    salvarResposta("encontro", diaEscolhido + " - " + passeioEscolhido);
+    botao.disabled = true;
+    confirmacao.innerHTML = "Salvando nosso encontro... 💗";
 
-    document.getElementById("confirmacao").innerHTML =
-        "Nosso encontro será domingo? Não! Será " +
-        diaEscolhido + " e vamos para " +
-        passeioEscolhido +
-        "! Mal posso esperar! ❤️";
+    try {
+        const resposta = await fetch("/api/respostas", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                tipo: "encontro",
+                resposta: "Dia: " + diaEscolhido + " | Passeio: " + passeioEscolhido,
+            }),
+        });
+
+        if (!resposta.ok) throw new Error("Falha ao salvar");
+
+        encontroConfirmado = true;
+        confirmacao.innerHTML =
+            "Combinado! Nosso encontro vai ser no " + diaEscolhido +
+            " e vamos para " + passeioEscolhido + "! Mal posso esperar! ❤️";
+    } catch {
+        confirmacao.innerHTML = "Não consegui salvar agora, tenta de novo, meu amor! 💗";
+    } finally {
+        botao.disabled = false;
+    }
 }
 setInterval(criarCoracao, 700);
